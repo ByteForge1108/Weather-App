@@ -61,7 +61,7 @@ function getfromSessionStorage () {
 }
 
 async function fetchUserWeatherInfo (coordinates) {
-    const {lat, longi} = coordinates;
+    const {lat, lon} = coordinates;
     // make grantContainer invsible 
     grantAccessContainer.classList.remove("active");
     // make a loading page visible
@@ -70,8 +70,8 @@ async function fetchUserWeatherInfo (coordinates) {
     // API CALL
     try{
         const response = await 
-        fetch(`https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}&units=metric`);
-        const data = await response.JSON();
+        fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`);
+        const data = await response.json();
 
         // after fetching API 
         loadingScreen.classList.remove("active");
@@ -84,7 +84,7 @@ async function fetchUserWeatherInfo (coordinates) {
     }
 }
 
-function renderWeatherInfo (data) {
+function renderWeatherInfo (weatherInfo) {
     // first we've to fetch the elements 
     const cityName = document.querySelector("[data-cityName]");
     const countryIcon = document.querySelector("[data-countryIcon]");
@@ -156,7 +156,7 @@ async function fetchSearchWeatherInfo (city) {
         const response = await 
         fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`);
 
-        const data = await response.JSON();
+        const data = await response.json();
         loadingScreen.classList.remove("active");
         userInfoContainer.classList.add("active");
         renderWeatherInfo(data)
